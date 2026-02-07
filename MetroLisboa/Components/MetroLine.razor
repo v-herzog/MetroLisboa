@@ -1,0 +1,31 @@
+@using MetroLisboa.Models
+@using System.ComponentModel.DataAnnotations
+
+@if (Line is not null)
+{
+    <table class="table">
+        <thead class="@Line.Name.ToLower()">
+        <tr>
+            <th>Linha @Line.Name</th>
+            <th class="direction">@Line.Directions[0].Name</th>
+            <th class="direction">@Line.Directions[1].Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var station in Line.Stations)
+        {
+            <tr>
+                <td>@station.Name</td>
+                <td>@station.Platforms[0].NextArrival</td>
+                <td>@station.Platforms[1].NextArrival</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Required]
+    [Parameter]
+    public Line? Line { get; set; }
+}

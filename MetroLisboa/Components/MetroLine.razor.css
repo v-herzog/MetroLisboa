@@ -1,0 +1,40 @@
+.verde th {
+    background-color: #26b050;
+    color: white;
+}
+
+.azul th {
+    background-color: #4299e1;
+    color: white;
+}
+
+.amarela th {
+    background-color: #c6a419;
+    color: white;
+}
+
+.vermelha th {
+    background-color: #d3051f;
+    color: white;
+}
+
+.direction {
+    width: 110px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    max-width: 500px;
+}
+
+.table th, .table td {
+    border: 1px solid #e2e8f0;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #f7fafc;
+}

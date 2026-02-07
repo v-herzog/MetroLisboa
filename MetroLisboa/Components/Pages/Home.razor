@@ -1,0 +1,48 @@
+﻿@page "/"
+
+@using MetroLisboa.Models
+@using MetroLisboa.Services
+@inject TimerService TimerService
+
+@implements IDisposable
+
+<h2>Metro Lisboa</h2>
+<h3>Arrivals / <a href="/map">Map</a></h3>
+<p>Last updated: @TimerService.LastUpdated.ToLongTimeString()</p>
+
+@if (_metroLines is null)
+{
+    <p><em>Loading metro data...</em></p>
+}
+else if (_metroLines.Count == 0)
+{
+    <p>No metro status data available.</p>
+}
+else
+{
+    <MetroLine Line="@_metroLines.FirstOrDefault(x => x.Name == "Verde")"/>
+    <MetroLine Line="@_metroLines.FirstOrDefault(x => x.Name == "Azul")"/>
+    <MetroLine Line="@_metroLines.FirstOrDefault(x => x.Name == "Amarela")"/>
+    <MetroLine Line="@_metroLines.FirstOrDefault(x => x.Name == "Vermelha")"/>
+}
+
+@code {
+    private List<Line>? _metroLines;
+
+    protected override void OnInitialized()
+    {
+        _metroLines = TimerService.CurrentMetroStatuses;
+        TimerService.OnChange += OnTimerServiceChange;
+    }
+
+    private void OnTimerServiceChange()
+    {
+        _metroLines = TimerService.CurrentMetroStatuses;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        TimerService.OnChange -= OnTimerServiceChange;
+    }
+}
